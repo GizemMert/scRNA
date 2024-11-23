@@ -80,3 +80,23 @@ print(f"Annotations saved to {output_csv_path}")
 # Display the first few rows
 print("\nFirst few rows of the annotations DataFrame:")
 print(annotations.head())
+
+cell_type_counts = annotations["CellType"].value_counts()
+print("Cell Type Frequencies:")
+print(cell_type_counts)
+
+# Cell type frequencies per donor
+donor_cell_type_counts = annotations.groupby("DonorID")["CellType"].value_counts()
+print("\nCell Type Frequencies per Donor:")
+print(donor_cell_type_counts)
+
+# Save summary statistics to CSV
+cell_type_counts.to_csv("cell_type_frequencies.csv")
+donor_cell_type_counts.to_csv("donor_cell_type_frequencies.csv")
+
+# Save printed results to a text file
+with open("donor_cell_type_counts.txt", "w") as f:
+    f.write("Cell Type Frequencies Across All Data:\n")
+    f.write(cell_type_counts.to_string())
+    f.write("\n\nCell Type Frequencies per Donor:\n")
+    f.write(donor_cell_type_counts.to_string())
