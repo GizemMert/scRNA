@@ -2,7 +2,7 @@ import os
 import gzip
 import pandas as pd
 import numpy as np
-import umap_viz
+import umap
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler
 
