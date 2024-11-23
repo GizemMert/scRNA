@@ -1,6 +1,8 @@
 import os
 import gzip
 import pandas as pd
+import matplotlib.pyplot as plt
+
 
 # Specify the directory containing the files
 data_dir = "Data/GSE116256_RAW"
@@ -101,7 +103,6 @@ with open("donor_cell_type_counts.txt", "w") as f:
     f.write("\n\nCell Type Frequencies per Donor:\n")
     f.write(donor_cell_type_counts.to_string())
 
-import matplotlib.pyplot as plt
 
 # Iterate over all unique donors
 unique_donors = annotations["DonorID"].unique()
