@@ -3,7 +3,7 @@ import gzip
 import pandas as pd
 
 # Specify the directory containing the files
-data_dir = "/home/aih/gizem.mert/scRNA/scRNA/Data/GSE116256_RAW"
+data_dir = "Data/GSE116256_RAW"
 
 # Criteria for filtering
 day_0_keyword = "-D0"
@@ -29,6 +29,8 @@ def parse_annotation_file(file_path):
 
 # Combine relevant files into a single DataFrame
 def load_filtered_annotations(data_dir, filtered_files):
+    if not filtered_files:
+        raise ValueError("No files matched the filtering criteria.")
     all_data = []
     for file in filtered_files:
         print(f"Parsing {file}...")
@@ -38,25 +40,29 @@ def load_filtered_annotations(data_dir, filtered_files):
     return pd.concat(all_data, ignore_index=True)
 
 # Load the filtered dataset
-annotations = load_filtered_annotations(data_dir, filtered_files)
+try:
+    annotations = load_filtered_annotations(data_dir, filtered_files)
 
-# Check if "DonorID" and "CellType" are in the DataFrame
-required_columns = ["DonorID", "CellType"]
-missing_columns = [col for col in required_columns if col not in annotations.columns]
+    # Check if "DonorID" and "CellType" are in the DataFrame
+    required_columns = ["DonorID", "CellType"]
+    missing_columns = [col for col in required_columns if col not in annotations.columns]
 
-if missing_columns:
-    print(f"Missing columns: {missing_columns}")
-else:
-    print("All required columns are present.")
+    if missing_columns:
+        print(f"Missing columns: {missing_columns}")
+    else:
+        print("All required columns are present.")
 
-if "DonorID" in annotations.columns:
-    print("Unique Donor IDs:")
-    print(annotations["DonorID"].unique())
+    if "DonorID" in annotations.columns:
+        print("Unique Donor IDs:")
+        print(annotations["DonorID"].unique())
 
-if "CellType" in annotations.columns:
-    print("\nUnique Cell Types:")
-    print(annotations["CellType"].unique())
+    if "CellType" in annotations.columns:
+        print("\nUnique Cell Types:")
+        print(annotations["CellType"].unique())
 
-print("Available columns in the annotations DataFrame:")
-print(annotations.columns.tolist())
+    print("Available columns in the annotations DataFrame:")
+    print(annotations.columns.tolist())
+
+except ValueError as e:
+    print(f"Error: {e}")
 
