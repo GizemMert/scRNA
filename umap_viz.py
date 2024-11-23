@@ -5,6 +5,8 @@ import numpy as np
 import umap
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning, module="umap")
 
 # Load gene expression data from .dem.txt.gz
 def load_expression_file(file_path):
@@ -60,7 +62,7 @@ scaler = StandardScaler()
 normalized_data = scaler.fit_transform(gene_expression)
 
 # Perform UMAP
-reducer = umap.UMAP(random_state=42)
+reducer = umap.UMAP(n_jobs=-1)
 embedding = reducer.fit_transform(normalized_data)
 
 # Convert to DataFrame
