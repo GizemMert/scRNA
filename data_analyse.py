@@ -61,7 +61,8 @@ try:
         print(annotations["CellType"].unique())
 
     print("Available columns in the annotations DataFrame:")
-    print(annotations.rows.tolist())
+    print(annotations)
+
 
 except ValueError as e:
     print(f"Error: {e}")
