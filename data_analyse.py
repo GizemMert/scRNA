@@ -100,3 +100,27 @@ with open("donor_cell_type_counts.txt", "w") as f:
     f.write(cell_type_counts.to_string())
     f.write("\n\nCell Type Frequencies per Donor:\n")
     f.write(donor_cell_type_counts.to_string())
+
+import matplotlib.pyplot as plt
+
+# Iterate over all unique donors
+unique_donors = annotations["DonorID"].unique()
+
+for donor in unique_donors:
+    # Create a bar plot for the current donor
+    plt.figure(figsize=(10, 6))
+    donor_data = annotations[annotations["DonorID"] == donor]["CellType"].value_counts()
+    donor_data.plot(kind="bar")
+
+    plt.title(f"Cell Type Frequencies for {donor}")
+    plt.xlabel("Cell Type")
+    plt.ylabel("Count")
+    plt.xticks(rotation=45)
+
+    # Save the plot as a PNG file
+    plt.savefig(f"cell_type_frequencies_{donor}.png")
+
+    # Optionally display the plot
+    # plt.show()  # Uncomment if you want to see each plot during the loop
+
+    plt.close()  # Close the plot to avoid overlap
