@@ -1,7 +1,7 @@
 import gzip
 
 # Path to your .gz file
-file_path = "Data/GSE116256-GPL18573_series_matrix.txt.gz"
+file_path = "Data/GSE116256-GPL24106_series_matrix.txt.gz"
 
 # Open and read the file
 with gzip.open(file_path, 'rt') as f:
