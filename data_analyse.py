@@ -126,8 +126,20 @@ for donor in unique_donors:
 
     plt.close()  # Close the plot to avoid overlap
 
+# Debug: Check for unique donor IDs
+unique_donors = annotations["DonorID"].unique()
+print(f"Unique Donor IDs after cleaning: {unique_donors}")
+
+# Ensure BM donors have distinct IDs
+annotations["DonorID"] = annotations["DonorID"].str.strip()  # Remove any accidental whitespace
+annotations["DonorID"] = annotations["DonorID"].str.replace(r"\.anno\.txt\.gz$", "", regex=True)
+
 # Group by DonorID and CellType, and count the occurrences
 donor_cell_counts = annotations.groupby(["DonorID", "CellType"]).size().unstack(fill_value=0)
+
+# Debug: Ensure proper grouping
+print("Grouped Donor Cell Counts:")
+print(donor_cell_counts)
 
 # Convert raw counts to percentages
 donor_cell_percentages = donor_cell_counts.div(donor_cell_counts.sum(axis=1), axis=0) * 100
@@ -140,14 +152,18 @@ plt.title("Cell Type Composition Across Donors (Percentage)")
 plt.xlabel("Donor")
 plt.ylabel("Percentage of Cell Types")
 plt.xticks(rotation=45)
+
+# Adjust legend positioning
 plt.legend(
     title="Cell Type",
     bbox_to_anchor=(1.05, 0.5),  # Position legend outside the plot
     loc="center left",
-    borderaxespad=0
+    borderaxespad=0,
 )
+
 plt.tight_layout()
 
 # Save the plot
-plt.savefig("cell_type_composition_stacked_bar_legend_right.png")
-plt.show()
+plt.savefig("cell_type_composition_stacked_bar_cleaned_distinct.png")
+
+
