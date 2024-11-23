@@ -3,7 +3,7 @@ import gzip
 import pandas as pd
 
 # Specify the directory containing the files
-data_dir = "Data/GSE116256_RAW"
+data_dir = "/home/aih/gizem.mert/scRNA/scRNA/Data/GSE116256_RAW"
 
 # Criteria for filtering
 day_0_keyword = "-D0"
