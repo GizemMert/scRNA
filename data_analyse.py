@@ -6,15 +6,17 @@ import pandas as pd
 data_dir = "Data/GSE116256_RAW"
 
 # Criteria for filtering
-day_0_keyword = "-D0"
-bm_keyword = "BM"
+include_keywords = ["-D0", "BM"]  # Files must include either of these
 exclude_keyword = "38n"
 
 # Filter files
 filtered_files = [
     file for file in os.listdir(data_dir)
-    if day_0_keyword in file and bm_keyword in file and exclude_keyword not in file and file.endswith(".anno.txt.gz")
+    if any(keyword in file for keyword in include_keywords)  # Include files with keywords
+    and exclude_keyword not in file  # Exclude files with "38n"
+    and file.endswith(".anno.txt.gz")  # Only process .anno.txt.gz files
 ]
+
 
 print(f"Filtered files ({len(filtered_files)}):")
 for file in filtered_files:
