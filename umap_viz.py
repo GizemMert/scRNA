@@ -25,6 +25,22 @@ anno_file = os.path.join(data_dir, "GSM3587924_AML1012-D0.anno.txt.gz")  # Corre
 
 # Load the data
 expression_data = load_expression_file(dem_file)
+print(expression_data.describe())
+print(expression_data.columns)
+
+total_counts_per_cell = expression_data.sum(axis=1)
+print(total_counts_per_cell.describe())
+gene_variances = expression_data.var(axis=0)
+print(gene_variances.describe())
+
+
+# Example: Plot distributions for a few genes
+expression_data.iloc[:, :5].boxplot()
+plt.title("Gene Expression Distributions")
+plt.ylabel("Expression Levels")
+plt.savefig("distribution.png")
+
+
 annotations = load_annotation_file(anno_file)
 
 # Merge gene expression with metadata on 'Cell'
