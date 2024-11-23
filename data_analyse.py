@@ -125,3 +125,29 @@ for donor in unique_donors:
     # plt.show()  # Uncomment if you want to see each plot during the loop
 
     plt.close()  # Close the plot to avoid overlap
+
+# Group by DonorID and CellType, and count the occurrences
+donor_cell_counts = annotations.groupby(["DonorID", "CellType"]).size().unstack(fill_value=0)
+
+# Convert raw counts to percentages
+donor_cell_percentages = donor_cell_counts.div(donor_cell_counts.sum(axis=1), axis=0) * 100
+
+# Plot the stacked bar chart
+donor_cell_percentages.plot(kind="bar", stacked=True, figsize=(12, 8), colormap="tab20")
+
+# Customize the plot
+plt.title("Cell Type Composition Across Donors (Percentage)")
+plt.xlabel("Donor")
+plt.ylabel("Percentage of Cell Types")
+plt.xticks(rotation=45)
+plt.legend(
+    title="Cell Type",
+    bbox_to_anchor=(1.05, 0.5),  # Position legend outside the plot
+    loc="center left",
+    borderaxespad=0
+)
+plt.tight_layout()
+
+# Save the plot
+plt.savefig("cell_type_composition_stacked_bar_legend_right.png")
+plt.show()
