@@ -1,7 +1,7 @@
 import gzip
 
 # Path to your .gz file
-file_path = "Data/GSE116256_RAW/GSM3588004_MUTZ3.anno.txt.gz"
+file_path = "Data/GSE116256_RAW/GSM3588005_OCI-AML3.dem.txt.gz"
 
 # Open and read the file
 with gzip.open(file_path, 'rt') as f:
